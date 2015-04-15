@@ -1,0 +1,30 @@
+#!/bin/bash
+export LC_ALL=C
+svnRepos=`cat repos-svn.txt`
+gitRepos=`cat repos-git.txt`
+
+mv versions.txt versions-old.txt
+printf "" > versions.txt
+
+for url in $svnRepos
+do
+  echo $url
+  echo "
+"$url" ###" >> versions.txt
+  LANG=en_GB.utf8 svn info "$url" | grep "Rev:" >> versions.txt
+done
+
+for url in $gitRepos
+do
+  echo $url
+  echo "
+"$url" ###" >> versions.txt
+  git ls-remote "$url" >> versions.txt
+done
+
+printf "\n\nDifferences to last time this script was run:\n"
+
+diff -s -U 0 -F "###$" versions-old.txt versions.txt
+
+printf "\nPress [Enter] to exit…"
+read bla
