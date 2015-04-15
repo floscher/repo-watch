@@ -10,7 +10,7 @@ for url in $svnRepos
 do
   echo $url
   echo "
-"$url" ###" >> versions.txt
+$url ###" >> versions.txt
   LANG=en_GB.utf8 svn info "$url" | grep "Rev:" >> versions.txt
 done
 
@@ -18,7 +18,7 @@ for url in $gitRepos
 do
   echo $url
   echo "
-"$url" ###" >> versions.txt
+$url ###" >> versions.txt
   git ls-remote "$url" >> versions.txt
 done
 
